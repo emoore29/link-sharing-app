@@ -1,8 +1,21 @@
-# Quicklinks (in development)
+# Quick Links (in development)
 
-A link-sharing app where users can create a profile and share social media links and more.
+This is a link-sharing app where users can create a profile and share social media links and more.
 
-This app is free-to-use and open source, and has been adapted from [Frontend Mentor's challenge](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT).
+This app has been adapted from [Frontend Mentor's challenge](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). [Vercel's fullstack app guide](https://vercel.com/guides/nextjs-prisma-postgres) was used in the initial planning of the app structure; however, this guide uses the pages router and I intend on using the app router.
+
+## Current Development Roadmap
+
+- create next app and create basic frontend
+- set up Vercel Postgres database
+- set up Prisma and create the database schema
+- install and generate Prisma client
+- add CRUD functionality
+- set up authentication with NextAuth
+- add log in functionality
+- add input validations
+- style frontend
+- update roadmap to include additional tasks after major tasks are completed
 
 ## Users will be able to:
 

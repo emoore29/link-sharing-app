@@ -1,6 +1,8 @@
 import styles from "../page.module.css";
 
 export default function Links() {
+  // TODO: Retrieve profile links and display in fields
+  // TODO: Add input fields to create and remove links
   return (
     <main className={styles.main}>
       <h2>Customise your links</h2>

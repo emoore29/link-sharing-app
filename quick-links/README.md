@@ -6,7 +6,7 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 
 ## Current Development Roadmap
 
-- create next app and create basic frontend
+- create next app and create basic unstyled frontend (DONE)
 - set up Vercel Postgres database
 - set up Prisma and create the database schema
 - install and generate Prisma client

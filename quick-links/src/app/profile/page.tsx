@@ -1,6 +1,7 @@
 import styles from "../page.module.css";
 
 export default function Profile() {
+  // TODO: Retrieve profile details from database and display in input fields
   return (
     <main className={styles.main}>
       <h2>Profile details</h2>

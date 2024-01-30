@@ -47,11 +47,19 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 
 ## Development Notes
 
-### NextAuth.js
+### NextAuth.js Library
 
 I chose this because it will integrate well with Next.js, PostgreSQL, and Vercel. I followed the instructions for getting started from the [NextAuth documentation](https://next-auth.js.org/getting-started/example).
 
-npm install next-auth.
+Input into the terminal:
+
+npm install next-auth
+
+#### Initialisation: Add API route
+
+The NextAuth method imported from next-auth handles different types of requests.
+
+Since I'm using the new App Router, I've initialised NextAuth.js with a route handler under app/api/auth/[...nextauth]/route.ts. [...nextauth] is a dynamic segment that will catch all subsequent segments following /app/api/auth/nextauth. I've followed the [NextAuth guide](https://next-auth.js.org/configuration/initialization#route-handlers-app) for this.
 
 ### Setting up a Postgres DB
 

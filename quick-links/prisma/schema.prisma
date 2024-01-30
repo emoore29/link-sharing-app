@@ -22,11 +22,17 @@ model Link {
 
 model Profile {
   id     Int     @id @default(autoincrement())
-  email    
-  firstname    
-  lastname    
+  email    String @unique
+  firstname    String
+  lastname    String
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
 }
 
-
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  firstname    String
+  lastname    String
+  profile Profile?
+}

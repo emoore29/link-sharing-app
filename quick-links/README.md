@@ -44,3 +44,16 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 - Preview
   - Clicking "Share Link" should copy the current URL to the user's clipboard and show the relevant toast message shown in the design.
   - If you're building the project as a full-stack app, ensure only the current user can only see the header with the "Back to Editor" and "Share Link" call-to-actions if they are the same user as the one in the profile. If they're not, the header should disappear and they shouldn't be able to access the admin area.
+
+## Development Notes
+
+### Setting up a Postgres DB
+
+I was unsure if I had installed postgreSQL for a previous project that I did not continue with. These are the steps I followed to set up the database:
+
+- Check postgreSQL is installed in cmd with "postgres --version"
+- Default username is postgres
+- "psql -U postgres" will prompt for a password, which should have been created when you installed postgreSQL
+- once logged in, "\du" gives a list of roles
+- "\l" lists databases
+- I used pgAdmin since I prefer a GUI to see

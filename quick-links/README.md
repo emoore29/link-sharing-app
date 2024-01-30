@@ -47,6 +47,12 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 
 ## Development Notes
 
+### NextAuth.js
+
+I chose this because it will integrate well with Next.js, PostgreSQL, and Vercel. I followed the instructions for getting started from the [NextAuth documentation](https://next-auth.js.org/getting-started/example).
+
+npm install next-auth.
+
 ### Setting up a Postgres DB
 
 I was unsure if I had installed postgreSQL for a previous project that I did not continue with. These are the steps I followed to set up the database:
@@ -56,4 +62,16 @@ I was unsure if I had installed postgreSQL for a previous project that I did not
 - "psql -U postgres" will prompt for a password, which should have been created when you installed postgreSQL
 - once logged in, "\du" gives a list of roles
 - "\l" lists databases
-- I used pgAdmin since I prefer a GUI to see
+- I used pgAdmin since I prefer using a GUI
+
+![Prisma flowchart](prisma-db-pull-generate-schema.png)
+
+#### Creating database schema
+
+I'm using Prisma Migrate, since this allows for keeping the database schema in sync with the Prisma schema as it evolves. It generates a history of .sql migration files.
+
+Starting out, I believe I need to create tables for Links to store information about the url, platform name, and the user that created the link, and a table for the user Profile, to store their name, email, and other information. I'm not sure at this stage whether I need to also create a table for the User. I plan on using NextAuth, which will provide the user authentication information for me. So do I also need a table to store this information?
+
+Some developers suggest that it's important to plan for the unknown future, and that if a transition into a different service were ever necessary, it would be helpful to maintain user data outside of NextAuth.
+
+##### Table for User?

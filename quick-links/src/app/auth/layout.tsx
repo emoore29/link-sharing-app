@@ -9,10 +9,11 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} ${styles.login}`}>
-        <h1>Sign In</h1>
-        {children}
+    <html>
+      <body>
+        <section className={`${inter.className} ${styles.login}`}>
+          {children}
+        </section>
       </body>
     </html>
   );

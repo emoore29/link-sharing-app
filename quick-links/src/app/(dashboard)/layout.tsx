@@ -14,10 +14,12 @@ export default async function Layout({
   const session = await getServerSession();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <DashboardHeader />
-        <SessionProvider session={session}>{children}</SessionProvider>
+    <html>
+      <body>
+        <section>
+          <DashboardHeader />
+          <SessionProvider session={session}>{children}</SessionProvider>
+        </section>
       </body>
     </html>
   );

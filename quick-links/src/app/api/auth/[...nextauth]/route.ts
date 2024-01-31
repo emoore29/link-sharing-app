@@ -10,20 +10,6 @@ export const OPTIONS: NextAuthOptions = {
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
-    // CredentialsProvider({
-    //   name: "Credentials",
-    //   credentials: {
-    //     username: {
-    //       label: "Username:",
-    //       type: "text",
-    //       placeholder: "your-username",
-    //     },
-    //   },
-    //   async authorize(credentials) {
-    //     // retrieve credentials from user table in database
-    //     // docs: configuration/providers/credentials
-    //   },
-    // }),
   ],
   pages: {
     signIn: "/auth/signin",

@@ -2,10 +2,23 @@
 
 import { signIn } from "next-auth/react";
 
-export default function SignIn() {
+interface LogInProps {
+  providerName?: string;
+  providerId?: string;
+}
+
+export default function LogIn({ providerName, providerId }: LogInProps) {
   return (
-    <button onClick={() => signIn(undefined, { callbackUrl: "/links" })}>
-      Sign in
-    </button>
+    <>
+      {providerName ? (
+        <button onClick={() => signIn(providerId, { callbackUrl: "/links" })}>
+          Sign in with {providerName}
+        </button>
+      ) : (
+        <button onClick={() => signIn(undefined, { callbackUrl: "/links" })}>
+          Sign in
+        </button>
+      )}
+    </>
   );
 }

@@ -3,15 +3,14 @@ import Navigation from "./Navigation";
 import Link from "next/link";
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
+import styles from "../css/header.module.css";
 
-export default async function Header() {
+export default async function DashboardHeader() {
   const session = await getServerSession();
 
   return (
-    <header>
-      <h1>
-        <Link href={"/"}>quicklinks</Link>
-      </h1>
+    <header className={styles.dashboardHeader}>
+      <h1>quicklinks</h1>
       <Navigation />
       {session ? <SignOut /> : <SignIn />}
     </header>

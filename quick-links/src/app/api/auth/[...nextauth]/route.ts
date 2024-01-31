@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { CredentialsProvider } from "next-auth/providers/credentials";
 
-export const options: NextAuthOptions = {
+export const OPTIONS: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -25,8 +25,11 @@ export const options: NextAuthOptions = {
     //   },
     // }),
   ],
+  pages: {
+    signIn: "/auth/signin",
+  },
 };
 
-const handler = NextAuth(options);
+const handler = NextAuth(OPTIONS);
 
 export { handler as GET, handler as POST };

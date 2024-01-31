@@ -55,11 +55,25 @@ Input into the terminal:
 
 npm install next-auth
 
-#### Initialisation: Add API route
+#### Initialisation
 
 The NextAuth method imported from next-auth handles different types of requests.
 
 Since I'm using the new App Router, I've initialised NextAuth.js with a route handler under app/api/auth/[...nextauth]/route.ts. [...nextauth] is a dynamic segment that will catch all subsequent segments following /app/api/auth/nextauth. I've followed the [NextAuth guide](https://next-auth.js.org/configuration/initialization#route-handlers-app) for this.
+
+To get started, I setup GitHub as a provider in the nextauth route handler. Then I added sign in and sign out options to the homepage. The signIn() and signOut() functions need to be used in client components, so I created SignIn and SignOut client components that I could import into the homepage.
+
+##### The difference between useSession, getSession, and getServerSession
+
+https://stackoverflow.com/questions/77093615/difference-between-usesession-getsession-and-getserversession-in-next-auth
+
+- useSession is a React hook and can only be called at the top of a client component.
+- getSession gives the session in a client component without following the rules of hooks.
+- getServerSession gives the session server-side (Route handlers, React server components).
+
+##### Middleware
+
+To protect pages when the user isn't signed in, I used [middleware](https://next-auth.js.org/tutorials/securing-pages-and-api-routes#nextjs-middleware). I used matchers for the links, preview and profile pages. Even though I won't have links to these on the homepage, which is simply designed to introduce the app and prompt users to sign in/create an account, this prevents somebody from using the url to access these pages without signing in. If they go to quicklinks.com/links, they will be redirected to sign in.
 
 ### Setting up a Postgres DB
 

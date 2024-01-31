@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "@/app/page.module.css";
 
 export default function Profile() {
   // TODO: Retrieve profile details from database and display in input fields

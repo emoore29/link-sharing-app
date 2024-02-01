@@ -10,14 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Link {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  platform     String   @db.VarChar(255)
-  url   String    @db.VarChar(255)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+
+  // one-to-one matching user with profile
+  profile Profile?
 }
 
 model Profile {
@@ -25,14 +23,28 @@ model Profile {
   email    String @unique
   firstname    String
   lastname    String
+ 
+  
+  // one-to-many matching profile with links
+  links    Link[]
+  
+  // one-to-one matching profile with user
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  firstname    String
-  lastname    String
-  profile Profile?
+model Link {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  platform     String   @db.VarChar(255)
+  url   String    @db.VarChar(255)
+  
+  // many-to-one matching links with user profile
+  user   Profile    @relation(fields: [profileId], references: [id])
+  profileId    Int @unique
 }
+
+
+
+

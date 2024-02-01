@@ -6,12 +6,10 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 
 ## Current Development Roadmap
 
-- create next app and create basic unstyled frontend (DONE)
-- set up Vercel Postgres database
-- set up Prisma and create the database schema
-- install and generate Prisma client
+- create user account in db when user first logs in
+- autofill profile info based on user info (email), name if available
 - add CRUD functionality
-- set up authentication with NextAuth (github DONE - TODO: add Google, Facebook, and email/pwd)
+- set up authentication with NextAuth (github DONE - TODO: add Google test user, custom credentials)
 - add input validations
 - style frontend
 - update roadmap to include additional tasks after major tasks are completed
@@ -29,30 +27,19 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 - See hover and focus states for all interactive elements on the page
 - Customise their links profile theme
 
-## Expected behaviour (from Frontend Mentor)
-
-- Links
-  - Clicking "Add new link" will add a new repeater where the user can select the platform to add a link for and add the URL.
-  - Adding a new link should immediately show the platform's link in the mobile mockup illustration even before the form is saved.
-  - When the user clicks "Save", the form should validate for the presence of a URL and ensure the URL pattern is correct for the platform (e.g. "https://www.frontendmentor.io/profile/:username" for the Frontend Mentor link).
-  - The user should be able to drag and drop by clicking and holding the two-line hamburger icon in the top left of each link repeater.
-  - The mobile mockup illustration isn't shown on tablet and mobile layouts. The user would need to click through to the preview page to see their profile.
-- Profile Details
-  - First name and last name are the only required fields. If no profile picture or email address are present, remove the necessary parts of the mobile mockup or use the person's initials inside the circle where the profile picture would be.
-  - You can use Web APIs like FileReader to handle the image upload. You can do this completely client-side if you're just building the front-end. If you're building full-stack, this is a nice opportunity to integrate with a media hosting service like Cloudinary and practice using their API. Remember to keep your API credentials secret if you choose this route!
-- Preview
-  - Clicking "Share Link" should copy the current URL to the user's clipboard and show the relevant toast message shown in the design.
-  - If you're building the project as a full-stack app, ensure only the current user can only see the header with the "Back to Editor" and "Share Link" call-to-actions if they are the same user as the one in the profile. If they're not, the header should disappear and they shouldn't be able to access the admin area.
-
 ## Development Notes
 
 ### NextAuth.js Library
 
 I chose this because it will integrate well with Next.js, PostgreSQL, and Vercel. I followed the instructions for getting started from the [NextAuth documentation](https://next-auth.js.org/getting-started/example).
 
-Input into the terminal:
+First, I installed next-auth:
 
 npm install next-auth
+
+#### OAuth Flow
+
+![OAuth Flow, taken from https://www.telerik.com/blogs/how-to-implement-google-authentication-nextjs-app-using-nextauth](oauth-flow.png)
 
 #### Initialisation
 
@@ -62,30 +49,17 @@ Since I'm using the new App Router, I've initialised NextAuth.js with a route ha
 
 To get started, I setup GitHub as a provider in the nextauth route handler. Then I added sign in and sign out options to the homepage. The signIn() and signOut() functions need to be used in client components, so I created SignIn and SignOut client components that I could import into the homepage.
 
-##### The difference between useSession, getSession, and getServerSession
-
-https://stackoverflow.com/questions/77093615/difference-between-usesession-getsession-and-getserversession-in-next-auth
-
-- useSession is a React hook and can only be called at the top of a client component.
-- getSession gives the session in a client component without following the rules of hooks.
-- getServerSession gives the session server-side (Route handlers, React server components).
-
 ##### Middleware
 
-To protect pages when the user isn't signed in, I used [middleware](https://next-auth.js.org/tutorials/securing-pages-and-api-routes#nextjs-middleware). I used matchers for the links, preview and profile pages. Even though I won't have links to these on the homepage, which is simply designed to introduce the app and prompt users to sign in/create an account, this prevents somebody from using the url to access these pages without signing in. If they go to quicklinks.com/links, they will be redirected to sign in.
+To protect the links, preview, and profile pages when the user isn't signed in, I used [middleware](https://next-auth.js.org/tutorials/securing-pages-and-api-routes#nextjs-middleware). This prevents somebody from using the url to access these pages without signing in. If they go to quicklinks.com/links, they will be redirected to sign in.
+
+src/middleware.ts
+
+![NextAuth middleware](image.png)
 
 ### Setting up a Postgres DB
 
-I was unsure if I had installed postgreSQL for a previous project that I did not continue with. These are the steps I followed to set up the database:
-
-- Check postgreSQL is installed in cmd with "postgres --version"
-- Default username is postgres
-- "psql -U postgres" will prompt for a password, which should have been created when you installed postgreSQL
-- once logged in, "\du" gives a list of roles
-- "\l" lists databases
-- I used pgAdmin since I prefer using a GUI
-
-![Prisma flowchart](prisma-db-pull-generate-schema.png)
+![Prisma flowchart from Prisma documentation https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/install-prisma-client-typescript-postgresql](prisma-db-pull-generate-schema.png)
 
 #### Creating database schema
 
@@ -95,4 +69,14 @@ Starting out, I believe I need to create tables for Links to store information a
 
 Some developers suggest that it's important to plan for the unknown future, and that if a transition into a different service were ever necessary, it would be helpful to maintain user data outside of NextAuth.
 
-##### Table for User?
+##### .env
+
+After writing my initial Prisma schema, running npx prisma migrate dev --name init results in this error:
+
+error: Environment variable not found: DATABASE_URL.
+--> schema.prisma:10
+|
+9 | provider = "postgresql"
+10 | url = env("DATABASE_URL")
+
+[Next.js](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables) recommends using a .env.local file to store env variables. Prisma uses .env. Due to this conflict, I needed to use the dotenv-cli package to [specify which environment file Prisma should use when running a migration](https://www.prisma.io/docs/orm/more/development-environment/environment-variables/using-multiple-env-files#running-migrations-on-different-environments).

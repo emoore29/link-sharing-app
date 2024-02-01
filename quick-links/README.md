@@ -11,8 +11,7 @@ This app has been adapted from [Frontend Mentor's challenge](https://www.fronten
 - set up Prisma and create the database schema
 - install and generate Prisma client
 - add CRUD functionality
-- set up authentication with NextAuth
-- add log in functionality
+- set up authentication with NextAuth (github DONE - TODO: add Google, Facebook, and email/pwd)
 - add input validations
 - style frontend
 - update roadmap to include additional tasks after major tasks are completed
